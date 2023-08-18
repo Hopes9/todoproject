@@ -6,6 +6,8 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from todoproject.views import CustomTokenObtainPairView, RegisterView
+
 schema_view = get_schema_view(
     openapi.Info(
         title="TODO API",
@@ -26,5 +28,7 @@ router.register(r'notes', NoteViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('jwt/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
